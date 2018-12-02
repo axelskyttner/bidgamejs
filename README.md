@@ -1,8 +1,15 @@
 
 # bidgame
 API for bidgame
-
-
+Test it by running 
+```
+npm start
+``` 
+and in another terminal run 
+```
+node src/players.js
+```
+this will run one game with the players specified in src/players.js.
 
 # API for javascript game engine
 
