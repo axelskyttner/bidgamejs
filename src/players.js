@@ -1,4 +1,4 @@
-const axios = require('axios')
+const sendGameRequest = require('./bidgameClient.js')
 
 const players = JSON.stringify({"players":[
   {
@@ -11,9 +11,8 @@ const players = JSON.stringify({"players":[
   }
   ]
 })
-console.log('players', players)
-axios.get('http://localhost:5000/newGame?players=' + players).then(res => {
-
-  console.log('res', res.data)
+//const url = 'https://bidgame.herokuapp.com/newGame'
+const url = 'http://localhost:3000/newGame'
+sendGameRequest(url, players).then(response => {
+  console.log('response', response)
 })
-
