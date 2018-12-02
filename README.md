@@ -1,3 +1,4 @@
+
 # bidgame
 API for bidgame
 
@@ -45,7 +46,13 @@ function test () {
 
 var code = "var myBid = " + test.toString()
 
+
+
 ```
 
 Example call
 http://localhost/newGame?players={%22players%22:[{%22id%22:%22olle%22,%22code%22:%22var%20myBid%20=%20function%20(players,%20color,%20transaction_list)%20{%20return%2010%20}%22}]}
+
+
+## Thanks to 
+[kriffe](https://github.com/kriffe) for packaging python lib to js.
