@@ -11,7 +11,6 @@ const players = JSON.stringify({"players":[
   }
   ]
 })
-//const url = 'https://bidgame.herokuapp.com/newGame'
 const url = 'http://localhost:3000/newGame'
 sendGameRequest(url, players).then(response => {
   console.log('response', response)

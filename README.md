@@ -9,7 +9,7 @@ API for bidgame
 cd javascript_game_engine
 npm start
 
-requiest url to localhost/newGame?players=...
+request url to localhost/newGame?players=...
 
 Include a code block as a string that declares "var myBid = function () { .... return 0 }" 
 
@@ -25,9 +25,12 @@ var history = [
   ]
 ```
 
-Example code block
+Example code block, inside src/players.js
 ```js
-var players = JSON.stringify({"players":[
+
+const sendGameRequest = require('./bidgameClient.js')
+
+const players = JSON.stringify({"players":[
   {
     id:"olle",
     code:"var myBid = function (players, color, history) { return Math.random() }"
@@ -38,15 +41,10 @@ var players = JSON.stringify({"players":[
   }
   ]
 })
-
-// To string example
-function test () {
-  //do some stuff
-}
-
-var code = "var myBid = " + test.toString()
-
-
+const url = 'http://localhost:3000/newGame'
+sendGameRequest(url, players).then(response => {
+  console.log('response', response)
+})
 
 ```
 
