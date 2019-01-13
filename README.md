@@ -63,8 +63,7 @@ sendGameRequest(url, players).then(response => {
 ```
 
 Example call
-http://localhost/newGame?players={%22players%22:[{%22id%22:%22olle%22,%22code%22:%22var%20myBid%20=%20function%20(players,%20color,%20transaction_list)%20{%20return%2010%20}%22}]}
-
+http://localhost:3000/newGame?players=%7B%22players%22:%5B%7B%22id%22:%22olle%22,%22code%22:%22var%20myBid%20=%20function%20(players,%20color,%20transaction_list)%20%7B%20return%2010%20%7D%22%7D%5D%7D
 
 ## contributors
 [kriffe](https://github.com/kriffe)
