@@ -1,7 +1,14 @@
 
 # bidgame
 API for bidgame
-Test it by running 
+
+# Install 
+Install it by running
+```
+npm install
+```
+# Start
+Start it by running 
 ```
 npm start
 ``` 
