@@ -4,10 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "mocha tests",
-    "tdd": "mocha tests --watch",
+    "test": "mocha --require ts-node/register tests/*.ts",
+    "tdd": "mocha --watch --watch-extensions ts -r ts-node/register tests/*.ts",
     "start": "node server.js",
-    "game": "node src/bidgameApp"
+    "game": "ts-node-dev src/bidgameApp"
   },
   "author": "",
   "license": "ISC",
@@ -15,10 +15,18 @@
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
     "express": "^4.16.2",
-    "safe-eval": "^0.4.1"
+    "safe-eval": "^0.4.1",
+    "typescript": "^3.2.2"
   },
   "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.5",
+    "@types/node": "^10.12.18",
     "chai": "^4.2.0",
-    "supertest": "^3.3.0"
+    "supertest": "^3.3.0",
+    "ts-node": "^7.0.1",
+    "ts-node-dev": "^1.0.0-pre.32",
+    "tslint": "^5.12.1",
+    "tslint-config-standard": "^8.0.1"
   }
 }

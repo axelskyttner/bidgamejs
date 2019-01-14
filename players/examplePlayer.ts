@@ -5,5 +5,5 @@ module.exports = function (gameState) {
   // gameState.moneyLeft
   // gameState.history
 
-  return Math.round(Math.random() * 100); // * gameState.moneyLeft
+  return Math.round(Math.random() * 90); // * gameState.moneyLeft
 }

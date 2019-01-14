@@ -6,7 +6,7 @@ const MAX_GAME_ROUNDS = 10
 function runBidGameRound(players, history_, roundId){   //ToDO: Create Player struct
   var history = history_.slice()
 
-  var colorList = ["RED", "BLUE", "GREEN"]
+  var colorList = ["RED", "BLUE", "GREEN", "YELLOW"]
 
   var gameRoundColor = colorList[randomIntFromInterval(0, colorList.length-1)]
   var playerList = JSON.stringify(players.map(player=>player.id))
@@ -14,9 +14,11 @@ function runBidGameRound(players, history_, roundId){   //ToDO: Create Player st
 
   var bids = players.map(function (player,index) {
     var historyList = JSON.stringify(history)
-    var code = "(function(){" + player.code + "\n" + "return myBid("+playerList+",'"+gameRoundColor+"',"+historyList+") })()"     //TODO: Add jslint
+    var code = "(function(){" + player.codex + "\n" + "return myBid("+playerList+",'"+gameRoundColor+"',"+historyList+") })()"     //TODO: Add jslint
     // var result = safeEval(code)
-    const result = player.bid()
+    const result = player.bid({
+
+    })
     return {bid: result, player: player}
   })
 

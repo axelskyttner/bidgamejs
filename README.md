@@ -10,13 +10,9 @@ npm install
 # Start
 Start it by running 
 ```
-npm start
+npm run game
 ``` 
-and in another terminal run 
-```
-node src/players.js
-```
-this will run one game with the players specified in src/players.js.
+this will run games with players one for every player in players.
 
 # API for javascript game engine
 
