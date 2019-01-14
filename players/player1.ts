@@ -1,4 +1,4 @@
-module.exports = function (gameState) {
+export default function (gameState) {
 
   // gameState.history
   // gameState.currentPortfolio
