@@ -7,7 +7,7 @@ const players = JSON.stringify({"players":[
   },
   {
     id:"nisse",
-    code:"var myBid = function (players, color, history) { return 10 }"
+    code:"var myBid = function (players, color, history) { return 20 }"
   }
   ]
 })

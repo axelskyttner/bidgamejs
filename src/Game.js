@@ -1,7 +1,7 @@
 var safeEval = require('safe-eval')
 
 
-const MAX_GAME_ROUNDS = 100
+const MAX_GAME_ROUNDS = 10
 
 function runBidGameRound(players, history_, roundId){   //ToDO: Create Player struct
   var history = history_.slice()
@@ -15,7 +15,8 @@ function runBidGameRound(players, history_, roundId){   //ToDO: Create Player st
   var bids = players.map(function (player,index) {
     var historyList = JSON.stringify(history)
     var code = "(function(){" + player.code + "\n" + "return myBid("+playerList+",'"+gameRoundColor+"',"+historyList+") })()"     //TODO: Add jslint
-    var result = safeEval(code)
+    // var result = safeEval(code)
+    const result = player.bid()
     return {bid: result, player: player}
   })
 
