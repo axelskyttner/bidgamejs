@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha tests",
     "tdd": "mocha tests --watch",
-    "start": "node server.js"
+    "start": "node server.js",
+    "game": "node src/bidgameApp"
   },
   "author": "",
   "license": "ISC",
