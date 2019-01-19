@@ -38,6 +38,22 @@ describe ("bid functions", function () {
   })
 })
 
+describe('player interface', () => {
+  it('should have the specified properties', () => {
+    const player1 = playerGenerator(1, (gameState) => {
+      expect(gameState['color']).to.be.oneOf(['RED', 'GREEN', 'BLUE', 'YELLOW'])
+      expect(gameState['currentBid']).to.be.oneOf([-Infinity, 2])
+      expect(gameState['history']).to.exist
+      return 1
+    })
+    const player2 = playerGenerator(2, (gameState) => {
+      return 2
+    })
+
+    newGame([player1, player2])
+  })
+})
+
 
 
 describe('__test__ functions', () => {

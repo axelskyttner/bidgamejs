@@ -7,48 +7,61 @@ type Player = {
 }
 
 type HistoryPoint = {
-  playerId: number,
-  bid: number,
-  winnings: string,
+  bid: Bid,
   round: number
 }
 type Bid = {
-  bid: number,
-  winnings: string,
+  amount: number,
+  color: string,
   playerId: number
 }
 const MAX_GAME_ROUNDS = 10
 
+function getHighestBidAmount (bids: Bid[]) {
+  return Math.max(...bids.map(bid => bid.amount))
+}
+
 export function runBidGameRound(players: Player[], history: HistoryPoint[], gameRoundColor: string): Bid {   //ToDO: Create Player struct
 
-  var bids = players.map(function (player: Player) {
+  const bids = players.reduce(function (bids: Bid[], player: Player) {
+    const currentBid = getHighestBidAmount(bids)
     const result = player.bid({
-      color: gameRoundColor
+      currentBid,
+      color: gameRoundColor,
+      history
     })
-    return {bid: result, playerId: player.id, winnings: gameRoundColor}
-  })
+    return bids.concat({ amount: result, playerId: player.id, color: gameRoundColor })
+  }, [])
 
-  const winningBid = bids.reduce(function (bestBid: Bid, result: Bid) {
-    return result.bid > bestBid.bid &&
-           playerCanAffordBid(result.playerId, result.bid, history) ?
-              result :
-              bestBid
+  const winningBid = bids.reduce(function (bestBid: Bid, currentBid: Bid) {
+    if (playerCanAffordBid(currentBid.playerId, currentBid.amount, history)) {
+      return getHighestBid(bestBid, currentBid)
+    } else {
+      return bestBid
+    }
   })
 
   return winningBid
 }
 
+function getHighestBid(bid1: Bid, bid2: Bid) {
+  return (bid1.amount > bid2.amount) ?
+    bid1 :
+    bid2
+}
+
+
 function endConditionCheck(history: HistoryPoint[]) {
-  var winnings = {}
-  history.forEach(function (item) {
-    if (item.winnings !== 'NONE') {
-      winnings[item.winnings] = winnings[item.winnings] === undefined ? 1 : winnings[item.winnings] + 1
+  const winnings = {}
+  history.forEach(function (historyPoint) {
+    if (historyPoint.bid.color !== 'NONE') {
+      winnings[historyPoint.bid.color] = winnings[historyPoint.bid.color] === undefined ? 1 : winnings[historyPoint.bid.color] + 1
     }
   })
 
-  var keys = Object.keys(winnings)
-  var fiveEqual = false
-  keys.forEach(function(key) {
+  const keys = Object.keys(winnings)
+  let fiveEqual = false
+  keys.forEach(function (key) {
     if (winnings[key] >= 5) {
       fiveEqual = true
     }
@@ -58,46 +71,45 @@ function endConditionCheck(history: HistoryPoint[]) {
 }
 
 
-function playerCanAffordBid (playerId: number, playerBid: number, history) {
+function playerCanAffordBid(playerId: number, playerBid: number, history) {
 
-  var bids = history.filter(function (item: Bid) {
+  const bids = history.filter(function (item: Bid) {
     return item.playerId === playerId
   })
 
-  var sum = bids.reduce( (sum: number, item: Bid) => sum + item.bid, playerBid)
+  const sum = bids.reduce((sum: number, item: Bid) => sum + item.amount, playerBid)
 
   return sum <= 100
 }
 
 
-function randomIntFromInterval(min,max)
-{
-    return Math.floor(Math.random()*(max-min+1)+min);
+function randomIntFromInterval(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 
 export function newGame(players: Player[]) {
 
-  var history = []
+  let history = []
 
-  var colorList = ["RED", "BLUE", "GREEN", "YELLOW"]
-  for (var i=0;i<MAX_GAME_ROUNDS;i++){
-    const gameRoundColor = colorList[randomIntFromInterval(0, colorList.length-1)]
+  const colorList = ["RED", "BLUE", "GREEN", "YELLOW"]
+  for (let i = 0; i < MAX_GAME_ROUNDS; i++) {
+    const gameRoundColor = colorList[randomIntFromInterval(0, colorList.length - 1)]
     const winningBid = runBidGameRound(players, history, gameRoundColor)
-    const something =  {playerId: winningBid.playerId, bid: winningBid.bid, winnings: gameRoundColor, round: i}   //ToDO Create HistoryStruct
+    const something = { playerId: winningBid.playerId, bid: winningBid.amount, winnings: gameRoundColor, round: i }   //ToDO Create HistoryStruct
 
     history = history.concat(something)
-    var endOfGame = endConditionCheck(history)
+    const endOfGame = endConditionCheck(history)
     if (endOfGame) {
       break
     }
   }
 
-  var winnings = {}
+  const winnings = {}
   history.forEach(function (item: Bid) {
-    if (item.winnings !== 'NONE') {
-      var playerScore = winnings[item.playerId] || {}
-      playerScore[item.winnings] = playerScore[item.winnings] === undefined ? 1 : playerScore[item.winnings] + 1
+    if (item.color !== 'NONE') {
+      const playerScore = winnings[item.playerId] || {}
+      playerScore[item.color] = playerScore[item.color] === undefined ? 1 : playerScore[item.color] + 1
       winnings[item.playerId] = playerScore
     }
   })
